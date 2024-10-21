@@ -782,10 +782,7 @@ private void guardarYMostrarImagenGraphviz() {
 
 private void mostrarImagen(String ubicacionArchivoSalida) {
     ImageIcon imagen = new ImageIcon(ubicacionArchivoSalida);
-    SwingUtilities.invokeLater(() -> {
-        jLabel9.setIcon(imagen);
-        jLabel9.repaint();
-    });
+    
 
     JFrame frame = new JFrame("Imagen Generada");
     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
