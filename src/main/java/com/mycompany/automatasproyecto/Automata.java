@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import static java.time.Clock.system;
@@ -50,7 +51,8 @@ DefaultTableModel modelo;
 DefaultTableModel Transiciones;
 DefaultTableModel cadenas;
 Integer Numero=0;
-
+JFrame frame = new JFrame("Grafo Generado");
+ 
 
 
     /**
@@ -58,30 +60,21 @@ Integer Numero=0;
      */
     public Automata() {
         initComponents();
+        
         this.modelo = (DefaultTableModel) Tabla.getModel();   
         this.Transiciones = (DefaultTableModel) Tabla2.getModel();   
         this.cadenas = (DefaultTableModel) CadenasT.getModel();
         txt.setEnabled(false);
-        Guardar.setEnabled(false);
-        Probar.setEnabled(false);
-        grafotxt.setEnabled(false);
-        Procesar.setEnabled(false);
+    
         
-        Integer cont = 0;
-        File png      = new File(System.getProperty("user.dir")+"\\src\\main\\java\\icons\\Grafox1.png");      
-        while(png.exists())
-        {
-          png.delete();
-          png = new File(System.getProperty("user.dir")+"\\src\\main\\java\\icons\\Grafox"+cont+".png");   
-          cont += 1;          
-        }        
-        png      = new File(System.getProperty("user.dir")+"\\src\\main\\java\\icons\\Grafod1.png");      
-        while(png.exists())
-        {
-          png.delete();
-          png = new File(System.getProperty("user.dir")+"\\src\\main\\java\\icons\\Grafod"+cont+".png");   
-          cont += 1;          
-        }          
+        Procesar.setEnabled(false);
+        setBounds(100,100,1000,660);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setTitle("Automatas");
+        
+       
+        
    
     }
 
@@ -95,33 +88,40 @@ Integer Numero=0;
     private void initComponents() {
 
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txt = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
-        Nuevo = new javax.swing.JButton();
-        Cargar = new javax.swing.JButton();
-        Guardar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         Procesar = new javax.swing.JButton();
-        Probar = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         limpiar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txt = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         Tabla2 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        grafotxt = new javax.swing.JTextArea();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         CadenasT = new javax.swing.JTable();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        grafotxt = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -131,11 +131,7 @@ Integer Numero=0;
             }
         });
 
-        txt.setColumns(20);
-        txt.setRows(5);
-        jScrollPane1.setViewportView(txt);
-
-        jPanel1.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -160,27 +156,6 @@ Integer Numero=0;
             Tabla.getColumnModel().getColumn(0).setPreferredWidth(1);
         }
 
-        Nuevo.setText("Nuevo Modelo");
-        Nuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NuevoActionPerformed(evt);
-            }
-        });
-
-        Cargar.setText("Cargar Modelo");
-        Cargar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CargarActionPerformed(evt);
-            }
-        });
-
-        Guardar.setText("Guardar Modelo");
-        Guardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GuardarActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Modelos Recientes");
 
         Procesar.setText("Procesar");
@@ -189,15 +164,6 @@ Integer Numero=0;
                 ProcesarActionPerformed(evt);
             }
         });
-
-        Probar.setText("Probar Autómata");
-        Probar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ProbarActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("Modelos");
 
         jLabel8.setText("Autómata");
 
@@ -220,63 +186,64 @@ Integer Numero=0;
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(jLabel7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(76, 76, 76)
                 .addComponent(jLabel8)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Cargar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Guardar, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                    .addComponent(Procesar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Probar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Procesar, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                     .addComponent(limpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Nuevo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Cargar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Guardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addContainerGap(44, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Procesar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Probar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(limpiar)
-                .addGap(47, 47, 47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addGap(5, 5, 5))
         );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 678, Short.MAX_VALUE)
+        );
+
+        jLabel3.setText("Área de texto");
+
+        txt.setColumns(20);
+        txt.setRows(5);
+        jScrollPane1.setViewportView(txt);
+
+        jLabel2.setText("Símbolos");
 
         Tabla2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -289,15 +256,7 @@ Integer Numero=0;
         Tabla2.setSelectionBackground(new java.awt.Color(153, 255, 255));
         jScrollPane4.setViewportView(Tabla2);
 
-        jLabel2.setText("Símbolos");
-
-        grafotxt.setColumns(20);
-        grafotxt.setRows(5);
-        jScrollPane3.setViewportView(grafotxt);
-
-        jLabel3.setText("Área de texto");
-
-        jLabel4.setText("Código en Graphviz del autómata");
+        jLabel6.setText("Cadenas Analizadas");
 
         CadenasT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -310,89 +269,217 @@ Integer Numero=0;
         CadenasT.setSelectionBackground(new java.awt.Color(153, 255, 255));
         jScrollPane5.setViewportView(CadenasT);
 
-        jLabel6.setText("Cadenas Analizadas");
+        jLabel4.setText("Código en Graphviz del autómata");
 
-        jButton2.setText("jButton2");
+        grafotxt.setColumns(20);
+        grafotxt.setRows(5);
+        grafotxt.setMaximumSize(new java.awt.Dimension(214, 214));
+        jScrollPane3.setViewportView(grafotxt);
+
+        jButton2.setText("Cargar Grapvhiz");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
+        jMenu1.setText("Archivo");
+
+        jMenuItem1.setText("Nuevo Modelo");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Cargar Modelo");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Guardar Modelo");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Ayuda");
+
+        jMenuItem4.setText("Manual De Usuario");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Integrantes");
+
+        jMenuItem5.setText("Odalis Mariandré Arana Marroquín Carné: 1890-22-");
+        jMenu3.add(jMenuItem5);
+
+        jMenuItem7.setText("Diego Andrés Vásquez Saavedra Carné:1890-22-3155");
+        jMenu3.add(jMenuItem7);
+
+        jMenuItem6.setText("Marvin David Hernandez Lopez Carné:1890-21-3900");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem6);
+
+        jMenuItem8.setText("Migue Angel Padilla Morales Carné:1890-21-15029");
+        jMenu3.add(jMenuItem8);
+
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(244, 244, 244)
-                        .addComponent(jLabel3))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(268, 268, 268)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(235, 235, 235)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(207, 207, 207)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2)
+                                .addGap(84, 84, 84))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(207, 207, 207)
+                                .addComponent(jLabel3)
+                                .addGap(275, 275, 275)
+                                .addComponent(jLabel6))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(181, 181, 181)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(300, 300, 300)
                                 .addComponent(jLabel4))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 26, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(352, 352, 352)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(68, Short.MAX_VALUE))
+                                .addGap(12, 12, 12)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 17, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                                .addComponent(jButton2))))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarActionPerformed
+    private void CerrarVentana(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_CerrarVentana
         // TODO add your handling code here:
-        if(seleccion.showDialog(null, "Abrir")==JFileChooser.APPROVE_OPTION)
+         Object [] opciones ={"Aceptar","Cancelar"};
+ int eleccion = JOptionPane.showOptionDialog(rootPane,"¿Desea cerrar la Aplicación? Su progreso puede ser Anulado","Mensaje de Confirmacion",
+ JOptionPane.YES_NO_OPTION,
+ JOptionPane.QUESTION_MESSAGE,null,opciones,"Aceptar");
+ if (eleccion == JOptionPane.YES_OPTION)
+ {
+ System.exit(0);
+ }
+ else
+ {
+     
+ }
+    }//GEN-LAST:event_CerrarVentana
+
+    private void ProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProcesarActionPerformed
+       procesar();
+    }//GEN-LAST:event_ProcesarActionPerformed
+
+    private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
+limpiar("C:\\automata\\entradaGraphviz.txt");  
+limpiar("C:\\automata\\salidaGraphviz.png"); 
+
+txt.setText("");
+grafotxt.setText("");
+// TODO add your handling code here:
+    }//GEN-LAST:event_limpiarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+System.exit(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+ guardarYMostrarImagenGraphviz();     // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+//Nuevo Modelo  
+Transiciones.setColumnCount(0);
+     Transiciones.setRowCount(0);   
+     cadenas.setRowCount(0);  
+     grafotxt.setText("");
+     grafotxt.setEnabled(false);
+     HabilitarCajas();
+     EsNuevo = true;
+     txt.setText("Simbolos: \n" +
+                 "Estados:\n" +
+                 "Estado inicial:\n" +
+                 "Estados de aceptacion:\n" +
+                 "Transiciones:\n" +
+                 "Cadenas a Analizar:");
+     Numero_archivos += 1;
+     modelo.addRow(new Object[]{Numero_archivos, "Modelo.txt"});     
+     
+          
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+//Cargar Modelo   
+if(seleccion.showDialog(null, "Abrir")==JFileChooser.APPROVE_OPTION)
         {
           File  archivo = seleccion.getSelectedFile();
             if (archivo.canRead())
@@ -412,12 +499,12 @@ Integer Numero=0;
                     JOptionPane.showMessageDialog(null, "Archivo no Compatible");
                 }
             }
-        }
-    }//GEN-LAST:event_CargarActionPerformed
+        }      
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        // TODO add your handling code here:
-     Boolean HayError = true;
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+//Guardar Modelo     
+   Boolean HayError = true;
      String Mensaje = "";
      if (!txt.getText().isEmpty()) {    
          while (HayError)
@@ -465,73 +552,15 @@ File            archivo=seleccion.getSelectedFile();
      {
         JOptionPane.showMessageDialog(null, "La Cadena esta vacia"); 
      }  
-    }//GEN-LAST:event_GuardarActionPerformed
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void NuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoActionPerformed
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+descargarArchivoPDF();        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
-     Transiciones.setColumnCount(0);
-     Transiciones.setRowCount(0);   
-     cadenas.setRowCount(0);  
-     jLabel9.setIcon(null);
-     grafotxt.setText("");
-     grafotxt.setEnabled(false);
-     HabilitarCajas();
-     EsNuevo = true;
-     txt.setText("Simbolos: \n" +
-                 "Estados:\n" +
-                 "Estado inicial:\n" +
-                 "Estados de aceptacion:\n" +
-                 "Transiciones:\n" +
-                 "Cadenas a Analizar:");
-     Numero_archivos += 1;
-     modelo.addRow(new Object[]{Numero_archivos, "Modelo.txt"});     
-     jLabel9.setIcon(null);
-     
-    }//GEN-LAST:event_NuevoActionPerformed
-
-    private void CerrarVentana(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_CerrarVentana
-        // TODO add your handling code here:
-         Object [] opciones ={"Aceptar","Cancelar"};
- int eleccion = JOptionPane.showOptionDialog(rootPane,"¿Desea cerrar la Aplicación? Su progreso puede ser Anulado","Mensaje de Confirmacion",
- JOptionPane.YES_NO_OPTION,
- JOptionPane.QUESTION_MESSAGE,null,opciones,"Aceptar");
- if (eleccion == JOptionPane.YES_OPTION)
- {
- System.exit(0);
- }
- else
- {
-     
- }
-    }//GEN-LAST:event_CerrarVentana
-
-    private void ProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProcesarActionPerformed
-       procesar();
-    }//GEN-LAST:event_ProcesarActionPerformed
-
-    private void ProbarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProbarActionPerformed
-        Prueba form2 = new Prueba();
-        form2.parametros();
-        form2.setVisible(true);
-        
-    }//GEN-LAST:event_ProbarActionPerformed
-
-    private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
-limpiar("C:\\automata\\entradaGraphviz.txt");  
-limpiar("C:\\automata\\salidaGraphviz.png"); 
-jLabel9.setIcon(null);
-txt.setText("");
-grafotxt.setText("");
-// TODO add your handling code here:
-    }//GEN-LAST:event_limpiarActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-System.exit(0);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
- guardarYMostrarImagenGraphviz();     // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -651,19 +680,17 @@ public Boolean ConfirmarReemplazo()
 public void HabilitarCajas()
 {
     txt.setEnabled(true);
-    Guardar.setEnabled(true);
+   
     Procesar.setEnabled(true);
 }
 
 public void procesar() {
     //jLabel9.setIcon(null);
+    
      ValidaAutomata1 metodos = new ValidaAutomata1();
     int cuenta_dospuntos = metodos.CuentaCaracter(txt.getText(), ":");
     int cuenta_comas = metodos.CuentaCaracter(txt.getText(), ",");
-   
-    Probar.setEnabled(false);
     grafotxt.setEnabled(false);
-
     Transiciones.setColumnCount(0);
     Transiciones.setRowCount(0);
     cadenas.setRowCount(0);
@@ -732,7 +759,7 @@ public void procesar() {
                 jLabel9.setIcon(imagen);*/
                 guardarYMostrarImagenGraphviz();
                 Numero += 1;
-                Probar.setEnabled(true);
+                
                 grafotxt.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo cargar la imagen");
@@ -782,15 +809,47 @@ private void guardarYMostrarImagenGraphviz() {
 
 private void mostrarImagen(String ubicacionArchivoSalida) {
     ImageIcon imagen = new ImageIcon(ubicacionArchivoSalida);
-    
-
-    JFrame frame = new JFrame("Imagen Generada");
     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     frame.setSize(800, 600);
+    frame.setLocationRelativeTo(null);
     JLabel label = new JLabel(imagen);
     frame.add(label);
     frame.setVisible(true);
 }
+
+private void descargarArchivoPDF() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar PDF");
+
+        fileChooser.setSelectedFile(new File("Manual.pdf"));
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File archivoDestino = fileChooser.getSelectedFile();
+
+            // Cargar el archivo PDF desde los recursos del programa
+            try (InputStream pdfStream = getClass().getResourceAsStream("/ManualUsuario.pdf");
+                 FileOutputStream fos = new FileOutputStream(archivoDestino)) {
+
+                if (pdfStream == null) {
+                    JOptionPane.showMessageDialog(this, "El archivo PDF no se pudo encontrar.");
+                    return;
+                }
+
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+
+                while ((bytesRead = pdfStream.read(buffer)) > 0) {
+                    fos.write(buffer, 0, bytesRead);
+                }
+
+                JOptionPane.showMessageDialog(this, "PDF descargado exitosamente.");
+
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error al descargar el archivo: " + ex.getMessage());
+            }
+        }
+    }
 
 
 
@@ -799,10 +858,6 @@ private void mostrarImagen(String ubicacionArchivoSalida) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable CadenasT;
-    private javax.swing.JButton Cargar;
-    private javax.swing.JButton Guardar;
-    private javax.swing.JButton Nuevo;
-    private javax.swing.JButton Probar;
     public javax.swing.JButton Procesar;
     private javax.swing.JTable Tabla;
     private javax.swing.JTable Tabla2;
@@ -815,10 +870,21 @@ private void mostrarImagen(String ubicacionArchivoSalida) {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
