@@ -52,6 +52,7 @@ DefaultTableModel Transiciones;
 DefaultTableModel cadenas;
 Integer Numero=0;
 JFrame frame = new JFrame("Grafo Generado");
+ JLabel label = new JLabel();
  
 
 
@@ -73,7 +74,21 @@ JFrame frame = new JFrame("Grafo Generado");
         setLocationRelativeTo(null);
         setTitle("Automatas");
         
-       
+       Integer cont = 0;
+        File png      = new File(System.getProperty("user.dir")+"\\src\\main\\java\\icons\\Grafox1.png");      
+        while(png.exists())
+        {
+          png.delete();
+          png = new File(System.getProperty("user.dir")+"\\src\\main\\java\\icons\\Grafox"+cont+".png");   
+          cont += 1;          
+        }        
+        png      = new File(System.getProperty("user.dir")+"\\src\\main\\java\\icons\\Grafod1.png");      
+        while(png.exists())
+        {
+          png.delete();
+          png = new File(System.getProperty("user.dir")+"\\src\\main\\java\\icons\\Grafod"+cont+".png");   
+          cont += 1;          
+        }    
         
    
     }
@@ -325,7 +340,7 @@ JFrame frame = new JFrame("Grafo Generado");
 
         jMenu3.setText("Integrantes");
 
-        jMenuItem5.setText("Odalis Mariandré Arana Marroquín Carné: 1890-22-");
+        jMenuItem5.setText("Odalis Mariandré Arana Marroquín Carné: 1890-22-7585");
         jMenu3.add(jMenuItem5);
 
         jMenuItem7.setText("Diego Andrés Vásquez Saavedra Carné:1890-22-3155");
@@ -686,7 +701,7 @@ public void HabilitarCajas()
 
 public void procesar() {
     //jLabel9.setIcon(null);
-    
+     label.setIcon(null);
      ValidaAutomata1 metodos = new ValidaAutomata1();
     int cuenta_dospuntos = metodos.CuentaCaracter(txt.getText(), ":");
     int cuenta_comas = metodos.CuentaCaracter(txt.getText(), ",");
@@ -808,13 +823,15 @@ private void guardarYMostrarImagenGraphviz() {
 }
 
 private void mostrarImagen(String ubicacionArchivoSalida) {
+    
     ImageIcon imagen = new ImageIcon(ubicacionArchivoSalida);
     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     frame.setSize(800, 600);
     frame.setLocationRelativeTo(null);
-    JLabel label = new JLabel(imagen);
+   label.setIcon(imagen);
     frame.add(label);
     frame.setVisible(true);
+    
 }
 
 private void descargarArchivoPDF() {
